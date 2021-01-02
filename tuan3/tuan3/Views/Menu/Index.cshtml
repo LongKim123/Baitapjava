@@ -1,0 +1,26 @@
+﻿@model IEnumerable<tuan3.Models.Menu>
+<ul class="nav navbar-nav">
+    @foreach(var item in Model.Where(c=>c.ParentID==null).OrderBy(c=>c.SortOrder))
+    {
+        <li>
+            <a>
+               @item.Name
+            </a>
+           @RenderMenuItem(Model.ToList(),item)
+        </li>
+    }
+</ul>
+@helper RenderMenuItem(List<tuan3.Models.Menu>list, tuan3.Models.Menu itemMenu)
+{
+    <ul>
+        @foreach(var item in list.Where(c=>c.ParentID==itemMenu.ID).OrderBy(c=>c.SortOrder))
+        {
+            <li>
+                <a>@item.Name</a>
+                @RenderMenuItem(list, item)
+            </li>
+        }
+
+    </ul>
+
+}
